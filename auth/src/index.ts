@@ -10,10 +10,9 @@ import { signoutRouter } from './routes/signout';
 import { singupRouter } from './routes/signup';
 import { errorHandler } from './middleware/error-handler';
 import { NotFoundError } from './errors/not-found-error';
-import { DatabaseConnectionError } from './errors/database-connection-error';
 
 const app = express();
-app.set('trus proxy',true);
+app.set('trust proxy',true);
 app.use(json());
 app.use(cookieSession({
     signed:false,
@@ -35,6 +34,10 @@ app.use(errorHandler);
 
 start();
 async function start(){
+    if(!process.env.JWT_KEY){
+        throw new Error('JWT must be defined');
+    }
+    
     try{
         await mongoose.connect('mongodb://auth-mongo-srv:27017/auth',{
 
