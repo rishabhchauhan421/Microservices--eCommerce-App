@@ -42,7 +42,6 @@ router.post('/api/users/signin',[
         jwt: userJwt
     };
 
-    console.log(req.session);
     res.status(200).send(existingUser);
 });
 
